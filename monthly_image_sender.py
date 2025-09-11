@@ -70,8 +70,10 @@ class ImageEmailSender:
             
         if isinstance(config['disallowed_buys'], str):
             self.disallowed_buys = [email.strip() for email in config['disallowed_buys'].split(',')]
-        else:
+        elif config['disallowed_buys'] != None:
             self.disallowed_buys = config['disallowed_buys']
+        else:
+            self.disallowed_buys = []
 
         if isinstance(config['manual_url_list'], str):
             self.manual_url_list = [email.strip() for email in config['manual_url_list'].split(',')]
@@ -152,8 +154,7 @@ class ImageEmailSender:
         """
         if manual:
             return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
-        disallowed_buys = str(self.disallowed_buys[idx])
-        if disallowed_buys == 'None':
+        if self.disallowed_buys == None or str(self.disallowed_buys[idx]) == 'None':
             disallowed_buys = ''
         else:
             disallowed_buys = disallowed_buys.replace('-', ',')

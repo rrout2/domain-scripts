@@ -93,7 +93,7 @@ class ImageEmailSender:
             self.sender_email = config['sender_email']
             self.sender_password = config['sender_password']
 
-        self.download_button_selector = '#root > button'
+        self.download_button_selector = '#root > div > main > button'
         self.buy_ids_selector = '#root > span'
 
 
@@ -200,9 +200,9 @@ class ImageEmailSender:
                             key=os.path.getctime)
             print(f"Downloaded file: {latest_file}")
 
-            if not manual:
-                self.store_buy_ids(driver, idx)
-                print(f"Buy IDs: {self.email_to_buys[self.email_list[idx]]}")
+            # if not manual:
+            #     self.store_buy_ids(driver, idx)
+            #     print(f"Buy IDs: {self.email_to_buys[self.email_list[idx]]}")
 
             return latest_file
         

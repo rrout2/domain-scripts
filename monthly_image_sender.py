@@ -155,7 +155,7 @@ class ImageEmailSender:
         if manual:
             return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
         disallowed_buys = str(self.disallowed_buys[idx])
-        if disallowed_buys == 'None':
+        if self.disallowed_buys == None or len(self.disallowed_buys) == 0 or str(self.disallowed_buys[idx]) == 'None':
             disallowed_buys = ''
         else:
             disallowed_buys = disallowed_buys.replace('-', ',')

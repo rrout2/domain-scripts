@@ -93,7 +93,7 @@ class ImageEmailSender:
             self.sender_email = config['sender_email']
             self.sender_password = config['sender_password']
 
-        self.download_button_selector = '#root > div > main > button'
+        self.download_button_selector = '#root > button'
         self.buy_ids_selector = '#root > span'
 
 
@@ -152,17 +152,17 @@ class ImageEmailSender:
             idx (int): Index of blueprint
             manual (bool): Whether to use manual URL
         """
-        return f"https://rrout2.github.io/ff/react-redraft/weekly.html?site=weekly&week=2&leagueId={self.league_id_list[idx]}&ownerId={self.user_id_list[idx]}"
-        # if manual:
-        #     return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
-        # if self.disallowed_buys == None or len(self.disallowed_buys) == 0 or str(self.disallowed_buys[idx]) == 'None':
-        #     disallowed_buys = ''
-        # else:
-        #     disallowed_buys = disallowed_buys.replace('-', ',')
-        # if len(self.team_id_list) > 0:
-        #     return f"https://rrout2.github.io/dynasty-ff/#/weekly?leagueId={self.league_id_list[idx]}&teamId={self.team_id_list[idx]}&disallowedBuys={disallowed_buys}"
-        # else:
-        #     return f"https://rrout2.github.io/dynasty-ff/#/weekly?leagueId={self.league_id_list[idx]}&userId={self.user_id_list[idx]}&disallowedBuys={disallowed_buys}"
+        if manual:
+            return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
+        disallowed_buys = str(self.disallowed_buys[idx])
+        if disallowed_buys == 'None':
+            disallowed_buys = ''
+        else:
+            disallowed_buys = disallowed_buys.replace('-', ',')
+        if len(self.team_id_list) > 0:
+            return f"https://rrout2.github.io/dynasty-ff/#/weekly?leagueId={self.league_id_list[idx]}&teamId={self.team_id_list[idx]}&disallowedBuys={disallowed_buys}"
+        else:
+            return f"https://rrout2.github.io/dynasty-ff/#/weekly?leagueId={self.league_id_list[idx]}&userId={self.user_id_list[idx]}&disallowedBuys={disallowed_buys}"
 
     def download_image(self, idx, manual=False):
         """Navigate to website and click download button"""
@@ -301,7 +301,7 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '1Hrt_WZPJwBhLjP6w4RTHZjOL3PTt1A6T' #uploader.create_or_get_folder(args.folder_name)
+        folder_id = '1vocm6w9tnU6ebDjPWOM1x0vdSB4uIHCo' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
 
         print(f"Running manual URL list ({len(sender.manual_url_list)})...")

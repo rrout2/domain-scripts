@@ -144,7 +144,7 @@ class ImageEmailSender:
             seconds += 1
         return seconds < timeout
 
-    def construct_url(self, idx, manual=False):
+    def construct_url(self, idx, manual=False, weekly_algo=False):
         """
         Construct the URL Certain League URL
 
@@ -152,6 +152,8 @@ class ImageEmailSender:
             idx (int): Index of blueprint
             manual (bool): Whether to use manual URL
         """
+        if weekly_algo:
+            return f"https://cjtags151508.github.io/ff/react-redraft/weekly.html?site=weekly&week=3&leagueId={self.league_id_list[idx]}&ownerId={self.user_id_list[idx]}"
         if manual:
             return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
         if self.disallowed_buys == None or len(self.disallowed_buys) == 0 or str(self.disallowed_buys[idx]) == 'None':
@@ -163,16 +165,18 @@ class ImageEmailSender:
         else:
             return f"https://rrout2.github.io/dynasty-ff/#/weekly?leagueId={self.league_id_list[idx]}&userId={self.user_id_list[idx]}&disallowedBuys={disallowed_buys}"
 
-    def download_image(self, idx, manual=False):
+    def download_image(self, idx, manual=False, weekly_algo=False):
         """Navigate to website and click download button"""
         driver = self.setup_driver()
         try:
             # Navigate to the website
-            url = self.construct_url(idx, manual)
+            url = self.construct_url(idx, manual, weekly_algo)
             print(f"Navigating to {url}")
             driver.get(url)
             
             time.sleep(2)
+            if weekly_algo:
+                self.download_button_selector = '#root > div > main > button'
             # Wait for button to exist
             WebDriverWait(driver, 30).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, self.download_button_selector))
@@ -355,7 +359,7 @@ def main():
 
             for attempt in range(2): # This loop provides one retry
                 try:
-                    downloaded_file_path = sender.download_image(i)
+                    downloaded_file_path = sender.download_image(i, weekly_algo=True)
                     if not downloaded_file_path:
                         print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
                         sender.fails.append(sender.email_list[i])

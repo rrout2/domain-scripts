@@ -304,7 +304,7 @@ def main():
     try:
         # Authenticate
         uploader.authenticate()
-        folder_id = '18yyiBo4uyzqg3qFbthoABtrtK2svgAkI' #uploader.create_or_get_folder(args.folder_name)
+        folder_id = '1DeG5mFd0I4yCrA36D0Jj8syggUVMzzpq' #uploader.create_or_get_folder(args.folder_name)
         print(f"Folder link: https://drive.google.com/drive/folders/{folder_id}")
 
         print(f"Running manual URL list ({len(sender.manual_url_list)})...")
@@ -359,12 +359,13 @@ def main():
 
             for attempt in range(2): # This loop provides one retry
                 try:
-                    downloaded_file_path = sender.download_image(i, weekly_algo=True)
+                    downloaded_file_path = sender.download_image(i, weekly_algo=False)
                     if not downloaded_file_path:
                         print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
-                        sender.fails.append(sender.email_list[i])
-                        sender.fail_indices.append(i)
-                        print(f"failed indices: {sender.fail_indices}")
+                        if attempt == 1:
+                            sender.fails.append(sender.email_list[i])
+                            sender.fail_indices.append(i)
+                            print(f"failed indices: {sender.fail_indices}")
                         continue
 
                     time.sleep(0.1)

@@ -144,7 +144,7 @@ class ImageEmailSender:
             seconds += 1
         return seconds < timeout
 
-    def construct_url(self, idx, manual=False, weekly_algo=False):
+    def construct_url(self, idx, manual=False, week=0):
         """
         Construct the URL Certain League URL
 
@@ -152,8 +152,8 @@ class ImageEmailSender:
             idx (int): Index of blueprint
             manual (bool): Whether to use manual URL
         """
-        if weekly_algo:
-            return f"https://cjtags151508.github.io/ff/react-redraft/weekly.html?site=weekly&week=3&leagueId={self.league_id_list[idx]}&ownerId={self.user_id_list[idx]}"
+        if week != 0:
+            return f"https://cjtags151508.github.io/ff/react-redraft/weekly.html?site=weekly&week={week}&leagueId={self.league_id_list[idx]}&ownerId={self.user_id_list[idx]}"
         if manual:
             return f"https://rrout2.github.io/dynasty-ff/#/weekly?{self.manual_url_list[idx]}"
         if self.disallowed_buys == None or len(self.disallowed_buys) == 0 or str(self.disallowed_buys[idx]) == 'None':
@@ -170,7 +170,7 @@ class ImageEmailSender:
         driver = self.setup_driver()
         try:
             # Navigate to the website
-            url = self.construct_url(idx, manual, weekly_algo)
+            url = self.construct_url(idx, manual, week=4)
             print(f"Navigating to {url}")
             driver.get(url)
             
@@ -359,7 +359,7 @@ def main():
 
             for attempt in range(2): # This loop provides one retry
                 try:
-                    downloaded_file_path = sender.download_image(i, weekly_algo=False)
+                    downloaded_file_path = sender.download_image(i, weekly_algo=True)
                     if not downloaded_file_path:
                         print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
                         if attempt == 1:

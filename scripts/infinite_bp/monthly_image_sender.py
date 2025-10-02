@@ -184,6 +184,12 @@ class ImageEmailSender:
             
             time.sleep(2)
             if weekly_algo:
+                team_setting_selector = '#root > div > main > section > div > div > div > div:nth-child(3) > div > div > div > div:nth-child(1) > div.setting-label'
+                WebDriverWait(driver, 30).until(
+                    EC.presence_of_element_located(
+                        (By.CSS_SELECTOR, team_setting_selector), 
+                    )
+                )
                 self.download_button_selector = '#root > div > main > button'
             # Wait for button to exist
             WebDriverWait(driver, 30).until(

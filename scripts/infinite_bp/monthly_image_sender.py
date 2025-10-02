@@ -175,7 +175,7 @@ class ImageEmailSender:
         driver = self.setup_driver()
         try:
             # Navigate to the website
-            url = self.construct_url(idx, manual, week=4)
+            url = self.construct_url(idx, manual, week=0)
             print(f"Navigating to {url}")
             driver.get(url)
             
@@ -363,7 +363,7 @@ def main():
 
             for attempt in range(2): # This loop provides one retry
                 try:
-                    downloaded_file_path = sender.download_image(i, weekly_algo=True)
+                    downloaded_file_path = sender.download_image(i, weekly_algo=False)
                     if not downloaded_file_path:
                         print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
                         if attempt == 1:

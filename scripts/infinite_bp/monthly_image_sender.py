@@ -334,7 +334,7 @@ def main():
 
                     time.sleep(0.1)
                     print(f"Uploading {downloaded_file_path}...")
-                    file = uploader.upload_image(downloaded_file_path, f"{sender.manual_email_list[i]}.png", folsender.folder_idder_id)
+                    file = uploader.upload_image(downloaded_file_path, f"{sender.manual_email_list[i]}.png", sender.folder_id)
                     # if file:
                     #     uploader.make_public(file['id'])
                         # uploader.transfer_ownership(file['id'], sender.sender_email)

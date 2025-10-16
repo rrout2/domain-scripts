@@ -176,7 +176,7 @@ class ImageEmailSender:
         try:
             # Navigate to the website
             if weekly_algo:
-                url = self.construct_url(idx, manual, week=6)
+                url = self.construct_url(idx, manual, week=7)
             else:
                 url = self.construct_url(idx, manual, week=0)
             print(f"Navigating to {url}")
@@ -372,7 +372,7 @@ def main():
 
             for attempt in range(2): # This loop provides one retry
                 try:
-                    downloaded_file_path = sender.download_image(i, weekly_algo=True)
+                    downloaded_file_path = sender.download_image(i, weekly_algo=False)
                     if not downloaded_file_path:
                         print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
                         if attempt == 1:

@@ -372,7 +372,7 @@ def main():
 
             for attempt in range(2): # This loop provides one retry
                 try:
-                    downloaded_file_path = sender.download_image(i, weekly_algo=False)
+                    downloaded_file_path = sender.download_image(i, weekly_algo=True)
                     if not downloaded_file_path:
                         print(f"Failed to download image {i + 1}/{len(sender.league_id_list)} for {sender.email_list[i]}")
                         if attempt == 1:

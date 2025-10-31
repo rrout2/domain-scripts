@@ -176,7 +176,7 @@ class ImageEmailSender:
         try:
             # Navigate to the website
             if weekly_algo:
-                url = self.construct_url(idx, manual, week=8)
+                url = self.construct_url(idx, manual, week=9)
             else:
                 url = self.construct_url(idx, manual, week=0)
             print(f"Navigating to {url}")
